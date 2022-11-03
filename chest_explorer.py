@@ -27,13 +27,7 @@ regex_value_string = r'"value": ([0-9]+)'
 def look_through_chests(url):
     #print('Begin searching in',url)
     string_chests = str(get_string_chest(url))
-    def regex_finder(regex,finder_func):
-        matches = re.findall(regex,string_chests)
-        for match in matches:
-            match = "{" + match.replace(newline_character,'') + "}"
-            match_json = json.loads(match)
-            finder_func(match_json)
-    def rare_mineral_finder(mineral_string, mineral_regex, value):
+    def rare_mineral_finder(mineral_regex, value):
         global dubloons
         matches = re.findall(mineral_regex,string_chests)
         for match in matches:
@@ -57,9 +51,9 @@ def look_through_chests(url):
         matches = re.findall(regex_value_string, string_chests)
         for match in matches:
             dubloons += int(match)
-    rare_mineral_finder('diamond',regex_diamond_string,400)
-    rare_mineral_finder('ruby', regex_ruby_string,250)
-    rare_mineral_finder('sapphire', regex_sapphire_string,200)
+    rare_mineral_finder(regex_diamond_string,400)
+    rare_mineral_finder(regex_ruby_string,250)
+    rare_mineral_finder(regex_sapphire_string,200)
     collect_all_the_monies()
     look_for_dead_spiders()
     look_for_boots()
